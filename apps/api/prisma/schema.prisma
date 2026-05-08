@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./drovora.db"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  phone     String?
+  role      String   @default("customer") // customer | driver | admin
+  address   String?
+  avatar    String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pickupRequests  PickupRequest[] @relation("CustomerRequests")
+  ratingsGiven    Rating[]        @relation("RatingsGiven")
+  assignedPickups PickupRequest[] @relation("DriverRequests")
+  driverLocation  DriverLocation?
+  ratingsReceived Rating[]        @relation("RatingsReceived")
+  earnings        Earning[]
+  notifications   Notification[]
+}
+
+model ReturnLocation {
+  id        String   @id @default(cuid())
+  name      String
+  type      String   // whole_foods | ups | kohls | staples | amazon_hub
+  address   String
+  city      String
+  state     String
+  zip       String
+  lat       Float
+  lng       Float
+  hours     String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  pickupRequests PickupRequest[]
+}
+
+model PickupRequest {
+  id               String   @id @default(cuid())
+  status           String   @default("pending")
+
+  customerId       String
+  customer         User           @relation("CustomerRequests", fields: [customerId], references: [id])
+  driverId         String?
+  driver           User?          @relation("DriverRequests", fields: [driverId], references: [id])
+  returnLocationId String
+  returnLocation   ReturnLocation @relation(fields: [returnLocationId], references: [id])
+
+  pickupAddress    String
+  pickupLat        Float?
+  pickupLng        Float?
+  packageCount     Int      @default(1)
+  packageDetails   String?
+  notes            String?
+  scheduledTime    DateTime?
+  isScheduled      Boolean  @default(false)
+
+  baseFee          Float    @default(5.99)
+  serviceFee       Float    @default(1.99)
+  totalAmount      Float    @default(7.98)
+  paymentStatus    String   @default("pending")
+  paymentMethod    String?
+
+  pickedUpAt       DateTime?
+  deliveredAt      DateTime?
+  completedAt      DateTime?
+  cancelledAt      DateTime?
+  cancelReason     String?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  rating  Rating?
+  earning Earning?
+}
+
+model DriverLocation {
+  id        String   @id @default(cuid())
+  driverId  String   @unique
+  driver    User     @relation(fields: [driverId], references: [id])
+  lat       Float
+  lng       Float
+  heading   Float?
+  isOnline  Boolean  @default(false)
+  updatedAt DateTime @updatedAt
+}
+
+model Rating {
+  id              String        @id @default(cuid())
+  pickupRequestId String        @unique
+  pickupRequest   PickupRequest @relation(fields: [pickupRequestId], references: [id])
+  fromUserId      String
+  fromUser        User          @relation("RatingsGiven", fields: [fromUserId], references: [id])
+  toUserId        String
+  toUser          User          @relation("RatingsReceived", fields: [toUserId], references: [id])
+  rating          Int
+  comment         String?
+  createdAt       DateTime      @default(now())
+}
+
+model Earning {
+  id              String        @id @default(cuid())
+  driverId        String
+  driver          User          @relation(fields: [driverId], references: [id])
+  pickupRequestId String        @unique
+  pickupRequest   PickupRequest @relation(fields: [pickupRequestId], references: [id])
+  amount          Float
+  status          String        @default("pending")
+  createdAt       DateTime      @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  title     String
+  message   String
+  type      String   @default("info")
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

@@ -3,17 +3,75 @@
 @tailwind utilities;
 
 @layer base {
-  * { font-family: 'Inter', sans-serif; }
-  body { @apply bg-gray-50 text-gray-900 antialiased; }
+  * { font-family: 'Inter', ui-sans-serif, sans-serif; }
+  html { -webkit-tap-highlight-color: transparent; }
+  body { @apply bg-ink-50 text-ink-900 antialiased; }
+  ::selection { @apply bg-brand-200 text-brand-900; }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-ink-200 rounded-full border-2 border-ink-50; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-ink-300; }
 }
 
 @layer components {
-  .btn-primary { @apply bg-brand-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-brand-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed; }
-  .btn-secondary { @apply bg-white text-gray-700 border border-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 transition-colors; }
-  .btn-danger { @apply bg-red-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition-colors; }
-  .input { @apply w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent; }
-  .card { @apply bg-white rounded-xl shadow-sm border border-gray-100 p-5; }
-  .badge { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium; }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-brand-600 text-white px-4 py-2.5 rounded-xl font-semibold text-sm shadow-soft hover:bg-brand-700 hover:shadow-card active:scale-95 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-soft;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 bg-white text-ink-700 border border-ink-200 px-4 py-2.5 rounded-xl font-semibold text-sm hover:bg-ink-50 hover:border-ink-300 active:scale-95 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 text-ink-600 px-3 py-2 rounded-xl font-medium text-sm hover:bg-ink-100 hover:text-ink-900 active:scale-95 transition-all duration-150;
+  }
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 bg-red-600 text-white px-4 py-2.5 rounded-xl font-semibold text-sm shadow-soft hover:bg-red-700 active:scale-95 transition-all duration-150 disabled:opacity-50;
+  }
+  .input {
+    @apply w-full bg-white border border-ink-200 rounded-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 transition-all duration-150 focus:outline-none focus:ring-4 focus:ring-brand-500/15 focus:border-brand-500;
+  }
+  .card {
+    @apply bg-white rounded-2xl shadow-soft border border-ink-100/80 p-5;
+  }
+  .card-hover {
+    @apply hover:shadow-card hover:-translate-y-0.5 transition-all duration-200;
+  }
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold;
+  }
+  .skeleton {
+    @apply relative overflow-hidden bg-ink-100 rounded-lg;
+  }
+  .skeleton::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.6), transparent);
+    animation: shimmer 1.6s infinite;
+    transform: translateX(-100%);
+  }
+  .chip {
+    @apply px-3.5 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-150;
+  }
+
+  /* Plain linear-gradient()s (not Tailwind's CSS-variable gradient-stop utilities) — some
+     browser extensions globally register --tw-gradient-* as typed custom properties with
+     non-empty initial values, which breaks the var()-based trick those utilities rely on. */
+  .grad-logo { background-image: linear-gradient(to bottom right, #3f5eff, #222dd6); }
+  .grad-avatar { background-image: linear-gradient(to bottom right, #6386ff, #2a3bf5); }
+  .grad-avatar-bar { background-image: linear-gradient(to right, #6386ff, #2a3bf5); }
+  .grad-hero-card { background-image: linear-gradient(to bottom right, #2a3bf5, #2029ac); }
+  .grad-login-hero { background-image: linear-gradient(to bottom right, #222dd6, #2a3bf5 50%, #1f2887); }
+  .grad-emerald { background-image: linear-gradient(to bottom right, #10b981, #047857); }
+  .grad-register-bg { background-image: linear-gradient(to bottom, rgb(238 244 255 / 0.6), #f7f8fa); }
 }
 
-.leaflet-container { z-index: 1; border-radius: 0.75rem; }
+.leaflet-container { z-index: 1; border-radius: inherit; font-family: 'Inter', sans-serif; }
+.leaflet-popup-content-wrapper { border-radius: 0.75rem; box-shadow: 0 8px 24px -6px rgb(23 26 38 / 0.18); }
+.leaflet-popup-content { font-size: 0.8125rem; font-weight: 500; margin: 0.5rem 0.75rem; }
+.leaflet-bar a { border-radius: 0.5rem !important; }
+
+.marker-pulse { position: relative; display: flex; align-items: center; justify-content: center; }
+.marker-pulse::before {
+  content: ''; position: absolute; inset: 0; border-radius: 9999px;
+  animation: pulse-ring 1.8s cubic-bezier(0.2,0.6,0.4,1) infinite;
+}

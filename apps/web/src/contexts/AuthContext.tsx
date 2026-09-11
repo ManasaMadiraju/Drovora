@@ -8,6 +8,16 @@ interface RegisterData { name: string; email: string; password: string; role: 'c
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
+// Forces a fresh socket connection before joining rooms for `user`, so a stale connection
+// from a previously logged-in account (e.g. switching demo accounts in the same tab) can't
+// keep receiving that account's room broadcasts.
+function connectSocketAs(user: { id: string; role: string }) {
+  socket.disconnect();
+  socket.connect();
+  socket.emit('user:join', user.id);
+  if (user.role === 'driver') socket.emit('driver:join', user.id);
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
@@ -20,8 +30,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setToken(t);
       const { data } = await api.get('/auth/me');
       setUser(data.user);
-      socket.connect();
-      if (data.user.role === 'driver') socket.emit('driver:join', data.user.id);
+      connectSocketAs(data.user);
     } catch { localStorage.removeItem('drovora_token'); }
     finally { setIsLoading(false); }
   }, []);
@@ -32,15 +41,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { data } = await api.post('/auth/login', { email, password });
     localStorage.setItem('drovora_token', data.token);
     setToken(data.token); setUser(data.user);
-    socket.connect();
-    if (data.user.role === 'driver') socket.emit('driver:join', data.user.id);
+    connectSocketAs(data.user);
   };
 
   const register = async (d: RegisterData) => {
     const { data } = await api.post('/auth/register', d);
     localStorage.setItem('drovora_token', data.token);
     setToken(data.token); setUser(data.user);
-    socket.connect();
+    connectSocketAs(data.user);
   };
 
   const logout = () => { localStorage.removeItem('drovora_token'); setToken(null); setUser(null); socket.disconnect(); };

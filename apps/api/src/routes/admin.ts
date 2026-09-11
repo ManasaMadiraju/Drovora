@@ -1,6 +1,7 @@
 import { Router, Response } from 'express';
 import prisma from '../prisma';
 import { authenticate, AuthRequest, requireRole } from '../middleware/auth';
+import { notifyUser } from '../lib/notify';
 
 const router = Router();
 router.use(authenticate, requireRole('admin'));
@@ -72,7 +73,7 @@ router.get('/analytics', async (_req: AuthRequest, res: Response) => {
 router.post('/notifications', async (req: AuthRequest, res: Response) => {
   try {
     const { userId, title, message, type } = req.body;
-    const notification = await prisma.notification.create({ data: { userId, title, message, type: type || 'info' } });
+    const notification = await notifyUser(userId, title, message, type || 'info');
     res.status(201).json({ notification });
   } catch { res.status(500).json({ error: 'Server error' }); }
 });

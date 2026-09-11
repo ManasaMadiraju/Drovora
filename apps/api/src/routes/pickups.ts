@@ -2,6 +2,7 @@ import { Router, Response } from 'express';
 import prisma from '../prisma';
 import { authenticate, AuthRequest, requireRole } from '../middleware/auth';
 import { getIO } from '../socket';
+import { notifyUser } from '../lib/notify';
 
 const router = Router();
 
@@ -32,7 +33,7 @@ router.post('/', authenticate, requireRole('customer'), async (req: AuthRequest,
       select: SELECT,
     });
     getIO().emit('new_pickup_request', pickup);
-    await prisma.notification.create({ data: { userId: req.user!.id, title: 'Pickup Requested', message: "Your pickup request has been placed. We're finding a driver for you.", type: 'success' } });
+    await notifyUser(req.user!.id, 'Pickup Requested', "Your pickup request has been placed. We're finding a driver for you.", 'success');
     res.status(201).json({ pickup });
   } catch (err) { console.error(err); res.status(500).json({ error: 'Server error' }); }
 });
@@ -81,7 +82,7 @@ router.patch('/:id/accept', authenticate, requireRole('driver'), async (req: Aut
     const pickup = await prisma.pickupRequest.update({ where: { id: req.params.id }, data: { driverId: req.user!.id, status: 'accepted' }, select: SELECT });
     getIO().emit(`pickup_updated_${req.params.id}`, pickup);
     getIO().emit('pickup_list_updated');
-    await prisma.notification.create({ data: { userId: existing.customerId, title: 'Driver Assigned', message: "A driver has been assigned to your pickup. They're on their way!", type: 'success' } });
+    await notifyUser(existing.customerId, 'Driver Assigned', "A driver has been assigned to your pickup. They're on their way!", 'success');
     res.json({ pickup });
   } catch { res.status(500).json({ error: 'Server error' }); }
 });
@@ -106,7 +107,11 @@ router.patch('/:id/status', authenticate, requireRole('driver', 'admin'), async 
       if (!await prisma.earning.findUnique({ where: { pickupRequestId: existing.id } })) {
         await prisma.earning.create({ data: { driverId: existing.driverId, pickupRequestId: existing.id, amount: +(existing.totalAmount * 0.7).toFixed(2), status: 'paid' } });
       }
-      await prisma.notification.create({ data: { userId: existing.customerId, title: 'Package Delivered!', message: `Your package has been delivered to ${pickup.returnLocation.name}.`, type: 'success' } });
+      await notifyUser(existing.customerId, 'Package Delivered!', `Your package has been delivered to ${pickup.returnLocation.name}.`, 'success');
+    } else if (status === 'en_route_pickup') {
+      await notifyUser(existing.customerId, 'Driver On The Way', 'Your driver is heading to your pickup address.', 'info');
+    } else if (status === 'picked_up') {
+      await notifyUser(existing.customerId, 'Package Picked Up', 'Your driver has your package and is heading to the return location.', 'info');
     }
     getIO().emit(`pickup_updated_${req.params.id}`, pickup);
     getIO().emit('pickup_list_updated');
@@ -123,6 +128,11 @@ router.patch('/:id/cancel', authenticate, async (req: AuthRequest, res: Response
     if (req.user!.role === 'customer' && existing.customerId !== req.user!.id) { res.status(403).json({ error: 'Forbidden' }); return; }
     if (['completed', 'cancelled'].includes(existing.status)) { res.status(400).json({ error: 'Cannot cancel' }); return; }
     const pickup = await prisma.pickupRequest.update({ where: { id: req.params.id }, data: { status: 'cancelled', cancelledAt: new Date(), cancelReason: reason }, select: SELECT });
+    if (req.user!.role === 'customer' && existing.driverId) {
+      await notifyUser(existing.driverId, 'Pickup Cancelled', 'The customer cancelled this pickup request.', 'warning');
+    } else if (existing.driverId !== req.user!.id) {
+      await notifyUser(existing.customerId, 'Pickup Cancelled', 'Your pickup request has been cancelled.', 'warning');
+    }
     getIO().emit(`pickup_updated_${req.params.id}`, pickup);
     getIO().emit('pickup_list_updated');
     res.json({ pickup });

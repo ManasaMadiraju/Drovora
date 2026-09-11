@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import api from '../../lib/api';
 import StatusBadge from '../../components/StatusBadge';
+import { SkeletonList } from '../../components/Skeleton';
 import { formatDistanceToNow } from 'date-fns';
 
 interface Order { id: string; status: string; pickupAddress: string; packageCount: number; totalAmount: number; paymentStatus: string; createdAt: string; customer: { name: string; email: string; phone: string }; driver: { name: string; phone: string } | null; returnLocation: { name: string }; }
+
+const FILTERS = [{ key: '', label: 'All' }, { key: 'pending', label: 'Pending' }, { key: 'accepted', label: 'Accepted' }, { key: 'completed', label: 'Completed' }, { key: 'cancelled', label: 'Cancelled' }];
 
 export default function Orders() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -22,35 +26,35 @@ export default function Orders() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6"><h1 className="text-2xl font-bold text-gray-900">Orders</h1><span className="text-sm text-gray-500">{total} total</span></div>
+      <div className="flex items-center justify-between mb-6"><h1 className="text-2xl font-bold text-ink-900">Orders</h1><span className="text-sm text-ink-500">{total} total</span></div>
       <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
-        {[{ key: '', label: 'All' }, { key: 'pending', label: 'Pending' }, { key: 'accepted', label: 'Accepted' }, { key: 'completed', label: 'Completed' }, { key: 'cancelled', label: 'Cancelled' }].map((f) => (
-          <button key={f.key} onClick={() => { setFilter(f.key); setPage(1); }} className={`px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${filter === f.key ? 'bg-brand-600 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}`}>{f.label}</button>
+        {FILTERS.map((f) => (
+          <button key={f.key} onClick={() => { setFilter(f.key); setPage(1); }} className={`chip ${filter === f.key ? 'bg-brand-600 text-white' : 'bg-white text-ink-600 border border-ink-200 hover:bg-ink-50'}`}>{f.label}</button>
         ))}
       </div>
-      {loading ? <div className="flex justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-4 border-brand-600 border-t-transparent" /></div> : (
+      {loading ? <SkeletonList count={5} /> : (
         <>
-          <div className="overflow-x-auto">
-            <table className="w-full bg-white rounded-xl border border-gray-100 shadow-sm">
-              <thead><tr className="border-b border-gray-100">{['ID', 'Status', 'Customer', 'Driver', 'Drop-off', 'Pkgs', 'Total', 'Created'].map((h) => (<th key={h} className="text-left text-xs font-semibold text-gray-500 px-4 py-3">{h}</th>))}</tr></thead>
+          <div className="overflow-x-auto rounded-2xl border border-ink-100 shadow-soft">
+            <table className="w-full bg-white">
+              <thead><tr className="border-b border-ink-100 bg-ink-50/60">{['ID', 'Status', 'Customer', 'Driver', 'Drop-off', 'Pkgs', 'Total', 'Created'].map((h) => (<th key={h} className="text-left text-xs font-semibold text-ink-500 px-4 py-3">{h}</th>))}</tr></thead>
               <tbody>
                 {orders.map((o) => (
-                  <tr key={o.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3"><span className="font-mono text-xs text-gray-400">#{o.id.slice(-8).toUpperCase()}</span></td>
+                  <tr key={o.id} className="border-b border-ink-50 last:border-0 hover:bg-ink-50/60 transition-colors">
+                    <td className="px-4 py-3"><span className="font-mono text-xs text-ink-400">#{o.id.slice(-8).toUpperCase()}</span></td>
                     <td className="px-4 py-3"><StatusBadge status={o.status} /></td>
-                    <td className="px-4 py-3"><p className="text-sm font-medium text-gray-900">{o.customer.name}</p><p className="text-xs text-gray-400">{o.customer.phone}</p></td>
-                    <td className="px-4 py-3">{o.driver ? <p className="text-sm text-gray-700">{o.driver.name}</p> : <span className="text-xs text-gray-400 italic">Unassigned</span>}</td>
-                    <td className="px-4 py-3 text-sm text-gray-600 max-w-xs truncate">{o.returnLocation.name}</td>
-                    <td className="px-4 py-3 text-sm text-center text-gray-700">{o.packageCount}</td>
-                    <td className="px-4 py-3"><p className="text-sm font-semibold">${o.totalAmount.toFixed(2)}</p><p className={`text-xs ${o.paymentStatus === 'paid' ? 'text-green-600' : 'text-yellow-600'}`}>{o.paymentStatus}</p></td>
-                    <td className="px-4 py-3 text-xs text-gray-400">{formatDistanceToNow(new Date(o.createdAt))} ago</td>
+                    <td className="px-4 py-3"><p className="text-sm font-medium text-ink-900">{o.customer.name}</p><p className="text-xs text-ink-400">{o.customer.phone}</p></td>
+                    <td className="px-4 py-3">{o.driver ? <p className="text-sm text-ink-700">{o.driver.name}</p> : <span className="text-xs text-ink-400 italic">Unassigned</span>}</td>
+                    <td className="px-4 py-3 text-sm text-ink-600 max-w-xs truncate">{o.returnLocation.name}</td>
+                    <td className="px-4 py-3 text-sm text-center text-ink-700">{o.packageCount}</td>
+                    <td className="px-4 py-3"><p className="text-sm font-semibold text-ink-900">${o.totalAmount.toFixed(2)}</p><p className={`text-xs font-medium ${o.paymentStatus === 'paid' ? 'text-emerald-600' : 'text-amber-600'}`}>{o.paymentStatus}</p></td>
+                    <td className="px-4 py-3 text-xs text-ink-400 whitespace-nowrap">{formatDistanceToNow(new Date(o.createdAt))} ago</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           {total > LIMIT && (
-            <div className="flex items-center justify-between mt-4"><p className="text-sm text-gray-500">Showing {(page - 1) * LIMIT + 1}–{Math.min(page * LIMIT, total)} of {total}</p><div className="flex gap-2"><button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="btn-secondary text-sm disabled:opacity-40">← Prev</button><button onClick={() => setPage((p) => p + 1)} disabled={page * LIMIT >= total} className="btn-secondary text-sm disabled:opacity-40">Next →</button></div></div>
+            <div className="flex items-center justify-between mt-4"><p className="text-sm text-ink-500">Showing {(page - 1) * LIMIT + 1}–{Math.min(page * LIMIT, total)} of {total}</p><div className="flex gap-2"><button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="btn-secondary text-sm disabled:opacity-40"><ChevronLeft size={14} /> Prev</button><button onClick={() => setPage((p) => p + 1)} disabled={page * LIMIT >= total} className="btn-secondary text-sm disabled:opacity-40">Next <ChevronRight size={14} /></button></div></div>
           )}
         </>
       )}

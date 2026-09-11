@@ -5,6 +5,13 @@ import { getIO } from '../socket';
 
 const router = Router();
 
+router.get('/me/location', authenticate, requireRole('driver'), async (req: AuthRequest, res: Response) => {
+  try {
+    const loc = await prisma.driverLocation.findUnique({ where: { driverId: req.user!.id } });
+    res.json({ location: loc });
+  } catch { res.status(500).json({ error: 'Server error' }); }
+});
+
 router.put('/me/location', authenticate, requireRole('driver'), async (req: AuthRequest, res: Response) => {
   try {
     const { lat, lng, heading } = req.body;

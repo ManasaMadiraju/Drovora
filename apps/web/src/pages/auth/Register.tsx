@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { User, Mail, Phone, Lock, ArrowRight, Package, Car } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import Logo from '../../components/Logo';
 
 export default function Register() {
   const { register } = useAuth();
@@ -13,38 +16,58 @@ export default function Register() {
     e.preventDefault(); setError('');
     if (form.password.length < 6) { setError('Password must be at least 6 characters'); return; }
     setLoading(true);
-    try { await register(form); navigate('/'); }
+    try { await register(form); toast.success('Account created — welcome to Drovora!'); navigate('/'); }
     catch (err: any) { setError(err.response?.data?.error || 'Registration failed'); }
     finally { setLoading(false); }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-50 to-white px-4 py-12">
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center grad-register-bg px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 bg-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-3"><span className="text-white font-bold text-2xl">D</span></div>
-          <h1 className="text-2xl font-bold text-gray-900">Create your account</h1>
-          <p className="text-gray-500 text-sm mt-1">Join Drovora — hassle-free Amazon returns</p>
+          <div className="flex justify-center mb-5">
+            <Logo size="lg" />
+          </div>
+          <h1 className="text-2xl font-bold text-ink-900">Create your account</h1>
+          <p className="text-ink-500 text-sm mt-1">Join Drovora — hassle-free Amazon returns</p>
         </div>
+
         <div className="card">
-          {error && <div className="mb-4 bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-lg">{error}</div>}
-          <div className="flex rounded-lg border border-gray-200 p-1 mb-5">
-            {(['customer', 'driver'] as const).map((r) => (
+          {error && <div className="mb-4 bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl">{error}</div>}
+
+          <div className="grid grid-cols-2 gap-2.5 mb-5">
+            {([{ r: 'customer', icon: Package, label: 'I need pickups' }, { r: 'driver', icon: Car, label: 'I want to drive' }] as const).map(({ r, icon: Icon, label }) => (
               <button key={r} type="button" onClick={() => setForm({ ...form, role: r })}
-                className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors capitalize ${form.role === r ? 'bg-brand-600 text-white' : 'text-gray-600 hover:text-gray-800'}`}>
-                {r === 'customer' ? 'I need pickups' : 'I want to drive'}
+                className={`flex flex-col items-center gap-1.5 py-3.5 rounded-xl border-2 transition-all ${form.role === r ? 'border-brand-500 bg-brand-50 text-brand-700' : 'border-ink-200 text-ink-500 hover:border-ink-300'}`}>
+                <Icon size={18} />
+                <span className="text-xs font-semibold">{label}</span>
               </button>
             ))}
           </div>
+
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">Full name</label><input className="input" placeholder="Jane Smith" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required /></div>
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">Email</label><input type="email" className="input" placeholder="you@example.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required /></div>
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">Phone</label><input type="tel" className="input" placeholder="415-555-0100" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></div>
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">Password</label><input type="password" className="input" placeholder="Min 6 characters" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required /></div>
-            <button type="submit" className="btn-primary w-full" disabled={loading}>{loading ? 'Creating account...' : 'Create account'}</button>
+            <div>
+              <label className="block text-sm font-medium text-ink-700 mb-1.5">Full name</label>
+              <div className="relative"><User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-400" /><input className="input pl-10" placeholder="Jane Smith" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required /></div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-ink-700 mb-1.5">Email</label>
+              <div className="relative"><Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-400" /><input type="email" className="input pl-10" placeholder="you@example.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required /></div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-ink-700 mb-1.5">Phone</label>
+              <div className="relative"><Phone size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-400" /><input type="tel" className="input pl-10" placeholder="415-555-0100" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-ink-700 mb-1.5">Password</label>
+              <div className="relative"><Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-400" /><input type="password" className="input pl-10" placeholder="Min 6 characters" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required /></div>
+            </div>
+            <button type="submit" className="btn-primary w-full py-2.5" disabled={loading}>
+              {loading ? 'Creating account...' : <>Create account <ArrowRight size={15} /></>}
+            </button>
           </form>
         </div>
-        <p className="text-center text-sm text-gray-600 mt-4">Already have an account? <Link to="/login" className="text-brand-600 font-medium hover:underline">Sign in</Link></p>
+        <p className="text-center text-sm text-ink-600 mt-5">Already have an account? <Link to="/login" className="text-brand-600 font-semibold hover:underline">Sign in</Link></p>
       </div>
     </div>
   );

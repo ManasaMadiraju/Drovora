@@ -73,7 +73,7 @@ export default function TrackPickup() {
     <div className="max-w-2xl mx-auto px-4 py-8">
       <button onClick={() => navigate(-1)} className="text-sm text-ink-500 hover:text-ink-700 mb-6 flex items-center gap-1.5"><ArrowLeft size={15} /> Back</button>
       <div className="flex items-center justify-between mb-6">
-        <div><h1 className="text-xl font-bold text-ink-900">Track Pickup</h1><p className="text-xs text-ink-400 mt-0.5 font-mono">#{pickup.id.slice(-8).toUpperCase()}</p></div>
+        <div><h1 className="font-display text-xl font-extrabold text-ink-900 tracking-tight">Track Pickup</h1><p className="text-xs text-ink-400 mt-1 font-mono">#{pickup.id.slice(-8).toUpperCase()}</p></div>
         <StatusBadge status={pickup.status} size="md" />
       </div>
       <div className="card p-0 overflow-hidden mb-6"><DrovoraMap points={mapPoints} height="260px" center={mapPoints.length > 0 ? [mapPoints[0].lat, mapPoints[0].lng] : undefined} /></div>

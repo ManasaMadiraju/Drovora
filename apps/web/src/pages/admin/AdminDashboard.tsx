@@ -32,7 +32,7 @@ export default function AdminDashboard() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-8 flex-wrap gap-3">
-        <div><h1 className="text-2xl font-bold text-ink-900">Admin Dashboard</h1><p className="text-ink-500 text-sm mt-0.5">Drovora operations overview</p></div>
+        <div><h1 className="font-display text-2xl font-extrabold text-ink-900 tracking-tight">Admin Dashboard</h1><p className="text-ink-500 text-sm mt-1">Drovora operations overview</p></div>
         <div className="flex gap-3"><Link to="/admin/orders" className="btn-secondary text-sm"><ClipboardList size={15} /> View Orders</Link><Link to="/admin/drivers" className="btn-primary text-sm"><UserCog size={15} /> Manage Drivers</Link></div>
       </div>
 
@@ -41,7 +41,7 @@ export default function AdminDashboard() {
           <div key={card.label} className="card">
             <div className="flex items-start justify-between">
               <div><p className="text-xs text-ink-500 mb-1">{card.label}</p><p className="text-2xl font-bold text-ink-900">{card.value}</p><p className="text-xs text-ink-400 mt-1">{card.sub}</p></div>
-              <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${card.cls}`}><card.icon size={17} /></div>
+              <div className={`w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 ${card.cls}`}><card.icon size={18} /></div>
             </div>
           </div>
         ))}
@@ -51,7 +51,7 @@ export default function AdminDashboard() {
         <div className="card">
           <h2 className="font-semibold text-ink-900 mb-4">Revenue (Last 7 Days)</h2>
           {revenueData.length === 0 ? <div className="h-40 flex items-center justify-center text-ink-400 text-sm">No revenue data yet</div> : (
-            <ResponsiveContainer width="100%" height={180}><BarChart data={revenueData}><XAxis dataKey="date" tick={{ fontSize: 11, fill: '#8b92a3' }} axisLine={{ stroke: '#dcdfe6' }} tickLine={false} /><YAxis tick={{ fontSize: 11, fill: '#8b92a3' }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} /><Tooltip formatter={(v: number) => [`$${v}`, 'Revenue']} contentStyle={{ borderRadius: 12, border: '1px solid #eef0f4', fontSize: 12 }} /><Bar dataKey="amount" fill="#3f5eff" radius={[6, 6, 0, 0]} isAnimationActive={false} /></BarChart></ResponsiveContainer>
+            <ResponsiveContainer width="100%" height={180}><BarChart data={revenueData}><XAxis dataKey="date" tick={{ fontSize: 11, fill: '#8b92a3' }} axisLine={{ stroke: '#dcdfe6' }} tickLine={false} /><YAxis tick={{ fontSize: 11, fill: '#8b92a3' }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} /><Tooltip formatter={(v: number) => [`$${v}`, 'Revenue']} contentStyle={{ borderRadius: 12, border: '1px solid #eef0f4', fontSize: 12 }} /><Bar dataKey="amount" fill="#ff5a36" radius={[6, 6, 0, 0]} isAnimationActive={false} /></BarChart></ResponsiveContainer>
           )}
         </div>
         <div className="card">

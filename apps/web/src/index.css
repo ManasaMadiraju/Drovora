@@ -16,28 +16,28 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 bg-brand-600 text-white px-4 py-2.5 rounded-xl font-semibold text-sm shadow-soft hover:bg-brand-700 hover:shadow-card active:scale-95 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-soft;
+    @apply inline-flex items-center justify-center gap-2 bg-brand-600 text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-coral-lift hover:bg-brand-700 hover:-translate-y-0.5 active:scale-95 active:translate-y-0 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:translate-y-0 disabled:hover:shadow-soft;
   }
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 bg-white text-ink-700 border border-ink-200 px-4 py-2.5 rounded-xl font-semibold text-sm hover:bg-ink-50 hover:border-ink-300 active:scale-95 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center gap-2 bg-white text-ink-700 border-2 border-ink-100 px-5 py-2.5 rounded-full font-bold text-sm hover:bg-ink-50 hover:border-ink-200 active:scale-95 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 text-ink-600 px-3 py-2 rounded-xl font-medium text-sm hover:bg-ink-100 hover:text-ink-900 active:scale-95 transition-all duration-150;
+    @apply inline-flex items-center justify-center gap-2 text-ink-600 px-3 py-2 rounded-full font-medium text-sm hover:bg-ink-100 hover:text-ink-900 active:scale-95 transition-all duration-150;
   }
   .btn-danger {
-    @apply inline-flex items-center justify-center gap-2 bg-red-600 text-white px-4 py-2.5 rounded-xl font-semibold text-sm shadow-soft hover:bg-red-700 active:scale-95 transition-all duration-150 disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 bg-red-600 text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-soft hover:bg-red-700 active:scale-95 transition-all duration-150 disabled:opacity-50;
   }
   .input {
-    @apply w-full bg-white border border-ink-200 rounded-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 transition-all duration-150 focus:outline-none focus:ring-4 focus:ring-brand-500/15 focus:border-brand-500;
+    @apply w-full bg-white border-2 border-ink-100 rounded-2xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 transition-all duration-150 focus:outline-none focus:ring-4 focus:ring-brand-500/15 focus:border-brand-500;
   }
   .card {
-    @apply bg-white rounded-2xl shadow-soft border border-ink-100/80 p-5;
+    @apply bg-white rounded-3xl shadow-soft border border-ink-100/80 p-5;
   }
   .card-hover {
     @apply hover:shadow-card hover:-translate-y-0.5 transition-all duration-200;
   }
   .badge {
-    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold;
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold;
   }
   .skeleton {
     @apply relative overflow-hidden bg-ink-100 rounded-lg;
@@ -50,7 +50,7 @@
     transform: translateX(-100%);
   }
   .chip {
-    @apply px-3.5 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-150;
+    @apply px-3.5 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-all duration-150;
   }
 
   /* Plain linear-gradient()s (not Tailwind's CSS-variable gradient-stop utilities) — some
@@ -58,11 +58,11 @@
      non-empty initial values, which breaks the var()-based trick those utilities rely on. */
   .grad-logo { background-image: linear-gradient(to bottom right, #3f5eff, #222dd6); }
   .grad-avatar { background-image: linear-gradient(to bottom right, #6386ff, #2a3bf5); }
-  .grad-avatar-bar { background-image: linear-gradient(to right, #6386ff, #2a3bf5); }
-  .grad-hero-card { background-image: linear-gradient(to bottom right, #2a3bf5, #2029ac); }
-  .grad-login-hero { background-image: linear-gradient(to bottom right, #222dd6, #2a3bf5 50%, #1f2887); }
+  .grad-avatar-bar { background-image: linear-gradient(to right, #ff8266, #e8481f); }
+  .grad-hero-card { background-image: linear-gradient(to bottom right, #ff6b4a, #c23916); }
+  .grad-login-hero { background-image: radial-gradient(ellipse 640px 480px at 12% 8%, rgb(255 90 54 / 0.28), transparent 60%), radial-gradient(ellipse 640px 480px at 92% 96%, rgb(63 94 255 / 0.22), transparent 60%), linear-gradient(to bottom right, #1c1e2c, #0d0e14); }
   .grad-emerald { background-image: linear-gradient(to bottom right, #10b981, #047857); }
-  .grad-register-bg { background-image: linear-gradient(to bottom, rgb(238 244 255 / 0.6), #f7f8fa); }
+  .grad-register-bg { background-image: linear-gradient(to bottom, rgb(255 228 219 / 0.55), #faf7f2); }
 }
 
 .leaflet-container { z-index: 1; border-radius: inherit; font-family: 'Inter', sans-serif; }

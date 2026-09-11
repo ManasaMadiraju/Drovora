@@ -22,7 +22,7 @@ export default function Analytics() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-ink-900 mb-6">Analytics</h1>
+      <h1 className="font-display text-2xl font-extrabold text-ink-900 tracking-tight mb-6">Analytics</h1>
       <div className="grid grid-cols-3 gap-4 mb-8">
         <div className="card text-center"><p className="text-3xl font-bold text-brand-600">{totalPickups}</p><p className="text-sm text-ink-500 mt-1">Total Pickups</p></div>
         <div className="card text-center"><p className="text-3xl font-bold text-emerald-600">{completionRate}%</p><p className="text-sm text-ink-500 mt-1">Completion Rate</p></div>
@@ -32,7 +32,7 @@ export default function Analytics() {
         <div className="card">
           <h2 className="font-semibold text-ink-900 mb-4">Daily Revenue (Last 7 Days)</h2>
           {revenueData.length === 0 ? <div className="h-48 flex items-center justify-center text-ink-400 text-sm">No data yet</div> : (
-            <ResponsiveContainer width="100%" height={200}><BarChart data={revenueData}><XAxis dataKey="date" tick={{ fontSize: 11, fill: '#8b92a3' }} axisLine={{ stroke: '#dcdfe6' }} tickLine={false} /><YAxis tick={{ fontSize: 11, fill: '#8b92a3' }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} /><Tooltip formatter={(v: number) => [`$${v}`, 'Revenue']} contentStyle={{ borderRadius: 12, border: '1px solid #eef0f4', fontSize: 12 }} /><Bar dataKey="amount" fill="#3f5eff" radius={[6, 6, 0, 0]} isAnimationActive={false} /></BarChart></ResponsiveContainer>
+            <ResponsiveContainer width="100%" height={200}><BarChart data={revenueData}><XAxis dataKey="date" tick={{ fontSize: 11, fill: '#8b92a3' }} axisLine={{ stroke: '#dcdfe6' }} tickLine={false} /><YAxis tick={{ fontSize: 11, fill: '#8b92a3' }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} /><Tooltip formatter={(v: number) => [`$${v}`, 'Revenue']} contentStyle={{ borderRadius: 12, border: '1px solid #eef0f4', fontSize: 12 }} /><Bar dataKey="amount" fill="#ff5a36" radius={[6, 6, 0, 0]} isAnimationActive={false} /></BarChart></ResponsiveContainer>
           )}
         </div>
         <div className="card">

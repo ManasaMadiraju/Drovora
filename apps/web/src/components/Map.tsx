@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { useEffect } from 'react';
 
-const PIN_COLORS = { customer: '#2a3bf5', driver: '#059669', return: '#e11d48' };
+const PIN_COLORS = { customer: '#2a3bf5', driver: '#059669', return: '#ff5a36' };
 
 function pinSvg(color: string, pulse: boolean) {
   return `

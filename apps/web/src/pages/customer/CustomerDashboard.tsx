@@ -23,17 +23,17 @@ export default function CustomerDashboard() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="mb-8 animate-slide-up">
-        <h1 className="text-2xl font-bold text-ink-900">Hey, {user?.name.split(' ')[0]} 👋</h1>
+        <h1 className="font-display text-2xl font-extrabold text-ink-900 tracking-tight">Hey, {user?.name.split(' ')[0]} 👋</h1>
         <p className="text-ink-500 mt-1">Ready to drop off your Amazon returns? We'll handle it.</p>
       </div>
 
-      <Link to="/customer/new" className="block grad-hero-card text-white rounded-2xl p-6 mb-8 shadow-card hover:shadow-lift transition-all duration-200 group relative overflow-hidden animate-slide-up">
+      <Link to="/customer/new" className="block grad-hero-card text-white rounded-[28px] p-6 mb-8 shadow-coral-lift hover:-translate-y-0.5 transition-all duration-200 group relative overflow-hidden animate-slide-up">
         <div className="absolute -right-6 -bottom-6 w-40 h-40 bg-white/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500" />
         <div className="flex items-center justify-between relative">
           <div>
-            <p className="text-brand-200 text-sm font-medium mb-1">Get started</p>
-            <h2 className="text-xl font-bold">Schedule a pickup</h2>
-            <p className="text-brand-100 text-sm mt-1.5 flex items-center gap-1">We'll pick up your packages and drop them off <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" /></p>
+            <p className="text-white/70 text-sm font-semibold mb-1">Get started</p>
+            <h2 className="font-display text-xl font-extrabold tracking-tight">Schedule a pickup</h2>
+            <p className="text-white/80 text-sm mt-1.5 flex items-center gap-1">We'll pick up your packages and drop them off <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" /></p>
           </div>
           <div className="w-14 h-14 bg-white/15 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
             <Package size={26} />

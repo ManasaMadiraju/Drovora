@@ -42,7 +42,7 @@ export default function Profile() {
           {user?.name.charAt(0).toUpperCase()}
         </div>
         <div>
-          <h1 className="text-xl font-bold text-ink-900">{user?.name}</h1>
+          <h1 className="font-display text-xl font-extrabold text-ink-900 tracking-tight">{user?.name}</h1>
           <span className="badge bg-brand-50 text-brand-700 ring-1 ring-brand-200 capitalize mt-1">{user?.role}</span>
         </div>
       </div>

@@ -52,7 +52,7 @@ export default function DriverDashboard() {
     <div className="max-w-2xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6 animate-slide-up">
         <div>
-          <h1 className="text-2xl font-bold text-ink-900">Hey, {user?.name.split(' ')[0]}</h1>
+          <h1 className="font-display text-2xl font-extrabold text-ink-900 tracking-tight">Hey, {user?.name.split(' ')[0]}</h1>
           <p className="text-ink-500 text-sm mt-0.5 flex items-center gap-1.5">
             <span className={`w-2 h-2 rounded-full ${isOnline ? 'bg-emerald-500' : 'bg-ink-300'}`} />
             {isOnline ? 'You are online' : 'You are offline'}

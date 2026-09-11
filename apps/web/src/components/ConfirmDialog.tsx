@@ -21,8 +21,8 @@ export function ConfirmProvider({ children }: { children: ReactNode }) {
       {state && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-fade-in">
           <div className="absolute inset-0 bg-ink-950/40 backdrop-blur-sm" onClick={() => close(false)} />
-          <div className="relative bg-white rounded-2xl shadow-lift p-6 w-full max-w-sm animate-scale-in">
-            <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${state.danger ? 'bg-red-50 text-red-600' : 'bg-brand-50 text-brand-600'}`}>
+          <div className="relative bg-white rounded-3xl shadow-lift p-6 w-full max-w-sm animate-scale-in">
+            <div className={`w-11 h-11 rounded-2xl flex items-center justify-center mb-4 ${state.danger ? 'bg-red-50 text-red-600' : 'bg-brand-50 text-brand-600'}`}>
               <AlertTriangle size={22} strokeWidth={2} />
             </div>
             <h3 className="text-base font-bold text-ink-900 mb-1.5">{state.title}</h3>

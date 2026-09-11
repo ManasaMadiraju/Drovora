@@ -65,14 +65,14 @@ export default function JobDetails() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
       <button onClick={() => navigate('/driver')} className="text-sm text-ink-500 hover:text-ink-700 mb-6 flex items-center gap-1.5"><ArrowLeft size={15} /> Dashboard</button>
-      <div className="flex items-center justify-between mb-6"><div><h1 className="text-xl font-bold text-ink-900">Job Details</h1><p className="text-xs text-ink-400 font-mono">#{pickup.id.slice(-8).toUpperCase()}</p></div><StatusBadge status={pickup.status} size="md" /></div>
+      <div className="flex items-center justify-between mb-6"><div><h1 className="font-display text-xl font-extrabold text-ink-900 tracking-tight">Job Details</h1><p className="text-xs text-ink-400 font-mono mt-0.5">#{pickup.id.slice(-8).toUpperCase()}</p></div><StatusBadge status={pickup.status} size="md" /></div>
 
       <div className="card p-0 overflow-hidden mb-6"><DrovoraMap points={mapPoints} height="250px" center={focusCenter} /></div>
 
       {action && hint && (
         <div className={`card mb-6 ${pickup.status === 'en_route_dropoff' ? 'bg-emerald-50 border-emerald-200' : 'bg-brand-50 border-brand-200'}`}>
           <p className="text-sm font-medium text-ink-700 mb-3 flex items-center gap-2"><hint.icon size={16} className={pickup.status === 'en_route_dropoff' ? 'text-emerald-600' : 'text-brand-600'} /> {hint.text}</p>
-          <button onClick={updateStatus} disabled={updating} className={`w-full py-3 rounded-xl font-semibold text-sm transition-colors ${pickup.status === 'en_route_dropoff' ? 'bg-emerald-600 hover:bg-emerald-700 text-white' : 'bg-brand-600 hover:bg-brand-700 text-white'} disabled:opacity-50`}>{updating ? 'Updating...' : action.label}</button>
+          <button onClick={updateStatus} disabled={updating} className={`w-full py-3 rounded-full font-bold text-sm transition-colors ${pickup.status === 'en_route_dropoff' ? 'bg-emerald-600 hover:bg-emerald-700 text-white' : 'bg-brand-600 hover:bg-brand-700 text-white'} disabled:opacity-50`}>{updating ? 'Updating...' : action.label}</button>
         </div>
       )}
 

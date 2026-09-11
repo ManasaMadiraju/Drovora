@@ -30,14 +30,12 @@ export default function Login() {
   return (
     <div className="min-h-[calc(100vh-4rem)] grid lg:grid-cols-2">
       <div className="hidden lg:flex flex-col justify-between grad-login-hero text-white p-12 relative overflow-hidden">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-72 h-72 bg-brand-400/20 rounded-full blur-3xl" />
         <div className="relative">
           <div className="mb-16">
             <Logo variant="light" size="md" />
           </div>
-          <h1 className="text-4xl font-bold leading-tight mb-4">Returns,<br />picked up.</h1>
-          <p className="text-brand-100 text-lg max-w-sm leading-relaxed">Skip the trip. We pick up your Amazon returns and drop them off wherever they need to go.</p>
+          <h1 className="font-display text-4xl font-extrabold leading-tight mb-4 tracking-tight">Returns,<br />picked up.</h1>
+          <p className="text-white/65 text-lg max-w-sm leading-relaxed">Skip the trip. We pick up your Amazon returns and drop them off wherever they need to go.</p>
         </div>
         <div className="relative space-y-4">
           {[
@@ -59,8 +57,8 @@ export default function Login() {
             <Logo size="md" />
           </div>
           <div className="mb-8">
-            <h1 className="text-2xl font-bold text-ink-900">Welcome back</h1>
-            <p className="text-ink-500 text-sm mt-1">Sign in to your Drovora account</p>
+            <h1 className="font-display text-2xl font-extrabold text-ink-900 tracking-tight">Welcome back</h1>
+            <p className="text-ink-500 text-sm mt-1.5">Sign in to your Drovora account</p>
           </div>
 
           {error && <div className="mb-4 bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl animate-slide-up">{error}</div>}
@@ -93,7 +91,7 @@ export default function Login() {
             </div>
             <div className="grid grid-cols-3 gap-2">
               {(['customer', 'driver', 'admin'] as const).map((role) => (
-                <button key={role} onClick={() => demoLogin(role)} disabled={loading} className="text-xs border border-ink-200 rounded-xl py-2.5 px-2 hover:bg-brand-50 hover:border-brand-300 hover:text-brand-700 transition-colors capitalize font-medium text-ink-600">{role}</button>
+                <button key={role} onClick={() => demoLogin(role)} disabled={loading} className="text-xs border-2 border-ink-100 rounded-full py-2.5 px-2 hover:bg-brand-50 hover:border-brand-300 hover:text-brand-700 transition-colors capitalize font-bold text-ink-600">{role}</button>
               ))}
             </div>
           </div>

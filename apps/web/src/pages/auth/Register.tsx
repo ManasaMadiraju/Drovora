@@ -28,8 +28,8 @@ export default function Register() {
           <div className="flex justify-center mb-5">
             <Logo size="lg" />
           </div>
-          <h1 className="text-2xl font-bold text-ink-900">Create your account</h1>
-          <p className="text-ink-500 text-sm mt-1">Join Drovora — hassle-free Amazon returns</p>
+          <h1 className="font-display text-2xl font-extrabold text-ink-900 tracking-tight">Create your account</h1>
+          <p className="text-ink-500 text-sm mt-1.5">Join Drovora — hassle-free Amazon returns</p>
         </div>
 
         <div className="card">
@@ -38,7 +38,7 @@ export default function Register() {
           <div className="grid grid-cols-2 gap-2.5 mb-5">
             {([{ r: 'customer', icon: Package, label: 'I need pickups' }, { r: 'driver', icon: Car, label: 'I want to drive' }] as const).map(({ r, icon: Icon, label }) => (
               <button key={r} type="button" onClick={() => setForm({ ...form, role: r })}
-                className={`flex flex-col items-center gap-1.5 py-3.5 rounded-xl border-2 transition-all ${form.role === r ? 'border-brand-500 bg-brand-50 text-brand-700' : 'border-ink-200 text-ink-500 hover:border-ink-300'}`}>
+                className={`flex flex-col items-center gap-1.5 py-3.5 rounded-2xl border-2 transition-all ${form.role === r ? 'border-brand-500 bg-brand-50 text-brand-700' : 'border-ink-100 text-ink-500 hover:border-ink-200'}`}>
                 <Icon size={18} />
                 <span className="text-xs font-semibold">{label}</span>
               </button>

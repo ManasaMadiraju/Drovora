@@ -26,10 +26,10 @@ export default function Orders() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6"><h1 className="text-2xl font-bold text-ink-900">Orders</h1><span className="text-sm text-ink-500">{total} total</span></div>
+      <div className="flex items-center justify-between mb-6"><h1 className="font-display text-2xl font-extrabold text-ink-900 tracking-tight">Orders</h1><span className="text-sm text-ink-500">{total} total</span></div>
       <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
         {FILTERS.map((f) => (
-          <button key={f.key} onClick={() => { setFilter(f.key); setPage(1); }} className={`chip ${filter === f.key ? 'bg-brand-600 text-white' : 'bg-white text-ink-600 border border-ink-200 hover:bg-ink-50'}`}>{f.label}</button>
+          <button key={f.key} onClick={() => { setFilter(f.key); setPage(1); }} className={`chip ${filter === f.key ? 'bg-brand-600 text-white' : 'bg-white text-ink-600 border-2 border-ink-100 hover:bg-ink-50'}`}>{f.label}</button>
         ))}
       </div>
       {loading ? <SkeletonList count={5} /> : (

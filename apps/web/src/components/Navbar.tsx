@@ -34,7 +34,7 @@ export default function Navbar() {
             {user && (
               <div className="hidden md:flex items-center gap-1">
                 {links.map((link) => (
-                  <Link key={link.to} to={link.to} className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive(link.to) ? 'text-brand-700 bg-brand-50' : 'text-ink-600 hover:text-ink-900 hover:bg-ink-50'}`}>
+                  <Link key={link.to} to={link.to} className={`px-3.5 py-2 rounded-full text-sm font-semibold transition-colors ${isActive(link.to) ? 'text-brand-700 bg-brand-50' : 'text-ink-600 hover:text-ink-900 hover:bg-ink-50'}`}>
                     {link.label}
                   </Link>
                 ))}
@@ -54,15 +54,15 @@ export default function Navbar() {
                   <ChevronDown size={14} className={`hidden sm:block text-ink-400 transition-transform ${menuOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {menuOpen && (
-                  <div className="absolute right-0 mt-2 w-52 bg-white border border-ink-100 rounded-xl shadow-lift py-1.5 z-50 animate-slide-down">
+                  <div className="absolute right-0 mt-2 w-52 bg-white border border-ink-100 rounded-2xl shadow-lift py-1.5 z-50 animate-slide-down">
                     <div className="px-3.5 py-2 border-b border-ink-100 mb-1">
                       <p className="text-sm font-semibold text-ink-900 truncate">{user.name}</p>
                       <p className="text-xs text-ink-400 truncate">{user.email}</p>
                     </div>
-                    <Link to="/profile" className="flex items-center gap-2.5 px-3.5 py-2 text-sm text-ink-700 hover:bg-ink-50 rounded-lg mx-1">
+                    <Link to="/profile" className="flex items-center gap-2.5 px-3.5 py-2 text-sm text-ink-700 hover:bg-ink-50 rounded-xl mx-1">
                       <UserIcon size={15} /> Profile
                     </Link>
-                    <button onClick={() => { logout(); navigate('/login'); }} className="w-full flex items-center gap-2.5 text-left px-3.5 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg mx-1">
+                    <button onClick={() => { logout(); navigate('/login'); }} className="w-full flex items-center gap-2.5 text-left px-3.5 py-2 text-sm text-red-600 hover:bg-red-50 rounded-xl mx-1">
                       <LogOut size={15} /> Sign out
                     </button>
                   </div>
@@ -83,7 +83,7 @@ export default function Navbar() {
         {user && mobileOpen && (
           <div className="md:hidden pb-3 flex flex-col gap-1 animate-slide-down">
             {links.map((link) => (
-              <Link key={link.to} to={link.to} className={`px-3 py-2.5 rounded-lg text-sm font-medium ${isActive(link.to) ? 'text-brand-700 bg-brand-50' : 'text-ink-600 hover:bg-ink-50'}`}>
+              <Link key={link.to} to={link.to} className={`px-3.5 py-2.5 rounded-full text-sm font-semibold ${isActive(link.to) ? 'text-brand-700 bg-brand-50' : 'text-ink-600 hover:bg-ink-50'}`}>
                 {link.label}
               </Link>
             ))}

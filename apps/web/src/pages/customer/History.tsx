@@ -24,10 +24,10 @@ export default function History() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6"><h1 className="text-2xl font-bold text-ink-900">Pickup History</h1><Link to="/customer/new" className="btn-primary text-sm"><Plus size={15} /> New Pickup</Link></div>
+      <div className="flex items-center justify-between mb-6"><h1 className="font-display text-2xl font-extrabold text-ink-900 tracking-tight">Pickup History</h1><Link to="/customer/new" className="btn-primary text-sm"><Plus size={15} /> New Pickup</Link></div>
       <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
         {FILTERS.map((f) => (
-          <button key={f.key} onClick={() => setFilter(f.key)} className={`chip ${filter === f.key ? 'bg-brand-600 text-white' : 'bg-white text-ink-600 border border-ink-200 hover:bg-ink-50'}`}>{f.label}</button>
+          <button key={f.key} onClick={() => setFilter(f.key)} className={`chip ${filter === f.key ? 'bg-brand-600 text-white' : 'bg-white text-ink-600 border-2 border-ink-100 hover:bg-ink-50'}`}>{f.label}</button>
         ))}
       </div>
       {loading ? <SkeletonList count={4} /> : pickups.length === 0 ? (

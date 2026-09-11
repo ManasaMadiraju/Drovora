@@ -46,7 +46,7 @@ export default function NewPickup() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
-      <div className="mb-6 animate-slide-up"><h1 className="text-2xl font-bold text-ink-900">Schedule a Pickup</h1><p className="text-ink-500 text-sm mt-1">We'll pick up your Amazon returns and drop them off</p></div>
+      <div className="mb-6 animate-slide-up"><h1 className="font-display text-2xl font-extrabold text-ink-900 tracking-tight">Schedule a Pickup</h1><p className="text-ink-500 text-sm mt-1.5">We'll pick up your Amazon returns and drop them off</p></div>
 
       <div className="flex items-center gap-2 mb-8">
         {[1, 2, 3].map((s) => (
@@ -70,7 +70,7 @@ export default function NewPickup() {
             <h2 className="font-semibold text-ink-900 mb-4 flex items-center gap-2"><Box size={16} className="text-brand-600" /> Packages</h2>
             <div className="space-y-3">
               {packages.map((pkg, i) => (
-                <div key={i} className="border border-ink-100 rounded-xl p-3.5 bg-ink-50/60">
+                <div key={i} className="border border-ink-100 rounded-2xl p-3.5 bg-ink-50/60">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium text-ink-700">Package {i + 1}</span>
                     {packages.length > 1 && <button onClick={() => setPackages(packages.filter((_, idx) => idx !== i))} className="text-red-500 text-xs hover:text-red-700 flex items-center gap-0.5"><X size={12} /> Remove</button>}
@@ -86,7 +86,7 @@ export default function NewPickup() {
             <h2 className="font-semibold text-ink-900 mb-4">Scheduling</h2>
             <div className="flex gap-2 mb-3">
               {[false, true].map((sched) => (
-                <button key={String(sched)} onClick={() => setIsScheduled(sched)} className={`flex-1 py-2.5 rounded-xl text-sm font-medium border transition-colors ${isScheduled === sched ? 'bg-brand-600 text-white border-brand-600' : 'text-ink-600 border-ink-200 hover:bg-ink-50'}`}>{sched ? 'Schedule' : 'ASAP'}</button>
+                <button key={String(sched)} onClick={() => setIsScheduled(sched)} className={`flex-1 py-2.5 rounded-2xl text-sm font-bold border-2 transition-colors ${isScheduled === sched ? 'bg-brand-600 text-white border-brand-600' : 'text-ink-600 border-ink-100 hover:bg-ink-50'}`}>{sched ? 'Schedule' : 'ASAP'}</button>
               ))}
             </div>
             {isScheduled && <input type="datetime-local" className="input" value={scheduledTime} min={new Date().toISOString().slice(0, 16)} onChange={(e) => setScheduledTime(e.target.value)} />}
@@ -104,7 +104,7 @@ export default function NewPickup() {
                 const Icon = ICONS[loc.type] || MapPin;
                 const selected = selectedLocation?.id === loc.id;
                 return (
-                  <button key={loc.id} onClick={() => setSelectedLocation(loc)} className={`w-full text-left p-3.5 rounded-xl border transition-colors ${selected ? 'border-brand-500 bg-brand-50' : 'border-ink-200 hover:border-ink-300 hover:bg-ink-50'}`}>
+                  <button key={loc.id} onClick={() => setSelectedLocation(loc)} className={`w-full text-left p-3.5 rounded-2xl border-2 transition-colors ${selected ? 'border-brand-500 bg-brand-50' : 'border-ink-100 hover:border-ink-200 hover:bg-ink-50'}`}>
                     <div className="flex items-center gap-3">
                       <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${selected ? 'bg-brand-600 text-white' : 'bg-ink-100 text-ink-500'}`}><Icon size={18} /></div>
                       <div className="min-w-0"><p className="text-sm font-medium text-ink-900">{loc.name}</p><p className="text-xs text-ink-500">{loc.address}, {loc.city}</p><p className="text-xs text-ink-400">{loc.hours}</p></div>
@@ -140,7 +140,7 @@ export default function NewPickup() {
             <h2 className="font-semibold text-ink-900 mb-3">Payment</h2>
             <div className="flex gap-2">
               {([{ m: 'card', icon: CreditCard, label: 'Card' }, { m: 'wallet', icon: Wallet, label: 'Wallet' }] as const).map(({ m, icon: Icon, label }) => (
-                <button key={m} onClick={() => setPaymentMethod(m)} className={`flex-1 py-2.5 rounded-xl text-sm font-medium border flex items-center justify-center gap-2 transition-colors ${paymentMethod === m ? 'bg-brand-600 text-white border-brand-600' : 'text-ink-600 border-ink-200'}`}><Icon size={15} /> {label}</button>
+                <button key={m} onClick={() => setPaymentMethod(m)} className={`flex-1 py-2.5 rounded-2xl text-sm font-bold border-2 flex items-center justify-center gap-2 transition-colors ${paymentMethod === m ? 'bg-brand-600 text-white border-brand-600' : 'text-ink-600 border-ink-100'}`}><Icon size={15} /> {label}</button>
               ))}
             </div>
             <p className="text-xs text-ink-400 mt-2 text-center">Payment is simulated — no real charges</p>

@@ -36,7 +36,7 @@ export default function Drivers() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6"><h1 className="text-2xl font-bold text-ink-900">Drivers</h1><span className="text-sm text-ink-500">{total} total</span></div>
+      <div className="flex items-center justify-between mb-6"><h1 className="font-display text-2xl font-extrabold text-ink-900 tracking-tight">Drivers</h1><span className="text-sm text-ink-500">{total} total</span></div>
       <div className="flex gap-3 mb-6">
         <div className="relative max-w-sm flex-1">
           <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-400" />

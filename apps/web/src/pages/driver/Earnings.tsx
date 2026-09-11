@@ -18,7 +18,7 @@ export default function Earnings() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-ink-900 mb-6">Earnings</h1>
+      <h1 className="font-display text-2xl font-extrabold text-ink-900 tracking-tight mb-6">Earnings</h1>
       <div className="grid grid-cols-2 gap-4 mb-8">
         <div className="card grad-emerald text-white border-0 shadow-card">
           <div className="flex items-start justify-between"><div><p className="text-sm text-emerald-100 mb-1">Total Earned</p><p className="text-3xl font-bold">${totalEarned.toFixed(2)}</p></div><PiggyBank size={22} className="text-emerald-100" /></div>
